@@ -78,13 +78,17 @@ public class testcommands {
     }
 
     public static void tryCalculator(String firstNumber, String secondNumber) {
+        //surandamas pirmas ir antras skaiciu input fieldai
         WebElement firstNum = browser.findElement(By.cssSelector("#sk1"));
         WebElement secondNum = browser.findElement(By.cssSelector("#sk2"));
+        //ivedama informacija I fieldus
         firstNum.sendKeys(firstNumber);
         secondNum.sendKeys(secondNumber);
+        //parenkamas zenklas
         WebElement selectionBox = browser.findElement(By.name("zenklas"));
         selectionBox.click();
         browser.findElement(By.xpath("//*[@id=\"number\"]/select/option[2]")).click();
+        //surandamas submit mygtukas ir paspaudziamas
         WebElement submitButton = browser.findElement(By.xpath("//*[@id=\"number\"]/input[3]"));
         submitButton.click();
     }
@@ -106,16 +110,22 @@ public class testcommands {
             Thread.currentThread().interrupt();
         }
         int startingList = browser.findElements(By.cssSelector("tr")).size();
+        //Paimamas pradiniu eiluciu skaicius
         System.out.println(startingList);
+        //Surandamas pirmo skaiciaus trynimo mygtukas
         WebElement firstDeleteButton = browser.findElement(By.xpath("/html/body/div/table/tbody/tr[2]/td[5]/a[2]"));
+        //paspaudziamas trynimo mygtukas
         firstDeleteButton.click();
+        //su bool ziurima ar norima norima spausti gerai kad istrinti ar ne
         if (wantToDelete) {
             browser.switchTo().alert().accept();
         } else {
             browser.switchTo().alert().dismiss();
         }
+        //paimamas galinis eiluciu skaicius
         int finishingList = browser.findElements(By.cssSelector("tr")).size();
         System.out.println(finishingList);
+        //lyginima ar maziau ar daugiau eiluciu like puslapi
         if (finishingList < startingList) {
             return "Istrinti pavyko";
         } else {
@@ -130,7 +140,9 @@ public class testcommands {
             Thread.currentThread().interrupt();
         }
         browser.findElement(By.linkText("Atliktos operacijos")).click();
+        //Surandamas pradinis pirmo numerio rezultatas
         String startingNumber = browser.findElement(By.xpath("/html/body/div/table/tbody/tr[2]/td[4]")).getText();
+        //surandamas ir paspaudziamas keisti mygtukas
         WebElement keistButton = browser.findElement(By.xpath("/html/body/div/table/tbody/tr[2]/td[5]/a[1]"));
         keistButton.click();
         try {
@@ -139,9 +151,11 @@ public class testcommands {
             Thread.currentThread().interrupt();
         }
         WebElement rezultatasInput = browser.findElement(By.xpath("//*[@id=\"command\"]/p[4]/input"));
+        //ivedama nauja informacija i rezultato pakeitimo fielda
         String changeToString = String.valueOf(changeTo);
         rezultatasInput.clear();
         rezultatasInput.sendKeys(changeToString);
+        //surandamas ir paspaudziamas atnaujinti mygtukas
         WebElement atnaujintiButton = browser.findElement(By.xpath("//*[@id=\"command\"]/p[5]/input"));
         atnaujintiButton.click();
         try {
@@ -162,6 +176,7 @@ public class testcommands {
         String changedNumber = browser.findElement(By.xpath("/html/body/div/table/tbody/tr[5]/td[2]")).getText();
         System.out.println(startingNumber);
         System.out.println(changedNumber);
+        //ziurima ar skiriasi pradinis rezultatu numeris ir galinis
         if (!startingNumber.equals(String.valueOf(changedNumber))) {
             return "Pakeisti pavyko";
         } else {
